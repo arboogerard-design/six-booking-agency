@@ -144,10 +144,10 @@
     f.reset();});}
   var fab=document.querySelector(".wa"),z=document.querySelectorAll(".form");
   if(fab&&z.length&&"IntersectionObserver" in window){
-    var d=0,io=new IntersectionObserver(function(es){
-      es.forEach(function(e){d+=e.isIntersecting?1:-1;});
-      if(d<0){d=0;}
-      fab.classList.toggle("wa--off",d>0);},{threshold:0.15});
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){e.target.__vis=e.isIntersecting;});
+      var a=false;z.forEach(function(e){if(e.__vis){a=true;}});
+      fab.classList.toggle("wa--off",a);},{threshold:0.15});
     z.forEach(function(e){io.observe(e);});
   }
 })();

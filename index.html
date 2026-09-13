@@ -399,11 +399,11 @@
   if (fab && "IntersectionObserver" in window) {
     var zonas = document.querySelectorAll("#inicio, #booking, .form");
     if (zonas.length) {
-      var dentro = 0;
       var ioF = new IntersectionObserver(function (ents) {
-        ents.forEach(function (e) { dentro += e.isIntersecting ? 1 : -1; });
-        if (dentro < 0) { dentro = 0; }
-        fab.classList.toggle("wa--off", dentro > 0);
+        ents.forEach(function (e) { e.target.__vis = e.isIntersecting; });
+        var alguna = false;
+        zonas.forEach(function (z) { if (z.__vis) { alguna = true; } });
+        fab.classList.toggle("wa--off", alguna);
       }, { threshold: 0.15 });
       zonas.forEach(function (z) { ioF.observe(z); });
     }
