@@ -400,10 +400,8 @@
     var zonas = document.querySelectorAll("#inicio, #booking, .form");
     if (zonas.length) {
       var ioF = new IntersectionObserver(function (ents) {
-        ents.forEach(function (e) { e.target.__vis = e.isIntersecting; });
-        var alguna = false;
-        zonas.forEach(function (z) { if (z.__vis) { alguna = true; } });
-        fab.classList.toggle("wa--off", alguna);
+        ents.forEach(function (e) { e.target.classList.toggle("cta-vista", e.isIntersecting); });
+        fab.classList.toggle("wa--off", !!document.querySelector(".cta-vista"));
       }, { threshold: 0.15 });
       zonas.forEach(function (z) { ioF.observe(z); });
     }

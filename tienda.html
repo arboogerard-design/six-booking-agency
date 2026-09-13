@@ -145,9 +145,8 @@
   var fab=document.querySelector(".wa"),z=document.querySelectorAll(".form");
   if(fab&&z.length&&"IntersectionObserver" in window){
     var io=new IntersectionObserver(function(es){
-      es.forEach(function(e){e.target.__vis=e.isIntersecting;});
-      var a=false;z.forEach(function(e){if(e.__vis){a=true;}});
-      fab.classList.toggle("wa--off",a);},{threshold:0.15});
+      es.forEach(function(e){e.target.classList.toggle("cta-vista",e.isIntersecting);});
+      fab.classList.toggle("wa--off",!!document.querySelector(".cta-vista"));},{threshold:0.15});
     z.forEach(function(e){io.observe(e);});
   }
 })();
