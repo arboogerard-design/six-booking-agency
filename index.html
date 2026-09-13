@@ -336,7 +336,9 @@
 
 
 /* el flotante respeta la barra del movil (notch / gesto) */
-.wa{bottom:calc(16px + env(safe-area-inset-bottom,0px))}
+.wa{bottom:calc(16px + env(safe-area-inset-bottom,0px));
+    transition:transform .3s cubic-bezier(.22,1,.36,1),opacity .3s,background .25s}
+.wa--off{opacity:0;pointer-events:none;transform:translateY(24px) scale(.9)}
 
 </style>
 
@@ -389,6 +391,22 @@
       if (nota) { nota.textContent = "Solicitud recibida. Te respondemos con disponibilidad y condiciones."; }
       fb.reset();
     });
+  }
+
+  /* 4 · el flotante se aparta donde ya hay un CTA: en el hero y sobre el formulario.
+     En móvil se comia un enlace del roster y tapaba campos; apagarlo es mas limpio que moverlo. */
+  var fab = document.querySelector(".wa");
+  if (fab && "IntersectionObserver" in window) {
+    var zonas = document.querySelectorAll("#inicio, #booking, .form");
+    if (zonas.length) {
+      var dentro = 0;
+      var ioF = new IntersectionObserver(function (ents) {
+        ents.forEach(function (e) { dentro += e.isIntersecting ? 1 : -1; });
+        if (dentro < 0) { dentro = 0; }
+        fab.classList.toggle("wa--off", dentro > 0);
+      }, { threshold: 0.15 });
+      zonas.forEach(function (z) { ioF.observe(z); });
+    }
   }
 
 })();

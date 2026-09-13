@@ -130,5 +130,27 @@
   <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M4 12h15M13 6l6 6-6 6"/></svg>
   <span>Solicitar booking</span>
 </a>
+<style>
+.wa{bottom:calc(16px + env(safe-area-inset-bottom,0px));
+    transition:transform .3s cubic-bezier(.22,1,.36,1),opacity .3s,background .25s}
+.wa--off{opacity:0;pointer-events:none;transform:translateY(24px) scale(.9)}
+</style>
+<script>
+(function(){
+  var f=document.getElementById("bookingForm");
+  if(f){f.addEventListener("submit",function(e){e.preventDefault();
+    var n=f.querySelector(".p-xs.muted");
+    if(n){n.textContent="Solicitud recibida. Te respondemos con disponibilidad y condiciones.";}
+    f.reset();});}
+  var fab=document.querySelector(".wa"),z=document.querySelectorAll(".form");
+  if(fab&&z.length&&"IntersectionObserver" in window){
+    var d=0,io=new IntersectionObserver(function(es){
+      es.forEach(function(e){d+=e.isIntersecting?1:-1;});
+      if(d<0){d=0;}
+      fab.classList.toggle("wa--off",d>0);},{threshold:0.15});
+    z.forEach(function(e){io.observe(e);});
+  }
+})();
+</script>
 </body>
 </html>
