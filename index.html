@@ -366,6 +366,11 @@
       });
     }, { rootMargin: "0px 0px -12% 0px", threshold: 0.08 });
     document.querySelectorAll(".rv").forEach(function (e) { io.observe(e); });
+    setTimeout(function () {
+      if (!document.querySelector(".rv.in")) {
+        document.querySelectorAll(".rv").forEach(function (e) { e.classList.add("in"); });
+      }
+    }, 1500);
   }
 
   /* 2 · cabecera que se condensa */
